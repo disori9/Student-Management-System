@@ -84,6 +84,7 @@ class InsertDialog(QDialog):
                        name, course, phone)
         connection.commit()
 
+        cursor.close()
         connection.close()
 
 
