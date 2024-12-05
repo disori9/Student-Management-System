@@ -76,12 +76,12 @@ class InsertDialog(QDialog):
         connection = sqlite3.connect("database.db")
         cursor = connection.cursor()
 
-        name = self.student_name
-        course = self.course_choices.itemText(self.course_choices.currentIndex())
-        phone = self.phone_number
+        name = self.student_name.text()
+        course = str(self.course_choices.itemText(self.course_choices.currentIndex()))
+        phone = int(self.phone_number.text())
 
-        cursor.execute("INSERT INTO students(name, course, mobile) VALUES (?,?,?)",
-                       name, course, phone)
+        cursor.execute("INSERT INTO students(name, course, mobile) VALUES (?, ?, ?)",
+                       (name, course, phone))
         connection.commit()
 
         cursor.close()
