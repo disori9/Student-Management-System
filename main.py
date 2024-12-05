@@ -14,6 +14,7 @@ class MainWindow(QMainWindow):
 
         file_menu = self.menuBar().addMenu("&File")
         help_menu = self.menuBar().addMenu("&Help")
+        edit_menu = self.menuBar().addMenu("&Edit")
 
         add_student = QAction("Add Student", self)
         add_student.triggered.connect(self.insert_student)
@@ -21,6 +22,10 @@ class MainWindow(QMainWindow):
 
         about = QAction("About", self)
         help_menu.addAction(about)
+
+        search = QAction("Search", self)
+        search.triggered.connect(self.search_student)
+        edit_menu.addAction(search)
 
         self.table = QTableWidget()
         self.table.setColumnCount(4)
