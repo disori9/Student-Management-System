@@ -1,4 +1,5 @@
-from PyQt6.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QGridLayout, QMainWindow
+from PyQt6.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QGridLayout, QMainWindow, \
+    QTableWidget
 from PyQt6.QtGui import QAction
 import sys
 
@@ -16,6 +17,8 @@ class MainWindow(QMainWindow):
 
         about = QAction("About", self)
         help_menu.addAction(about)
+
+        table = QTableWidget()
 
 app = QApplication(sys.argv)
 main_window = MainWindow()
