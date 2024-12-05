@@ -1,5 +1,6 @@
 from tkinter.constants import INSERT
 
+from PyQt6.QtCore import QLine
 from PyQt6.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QGridLayout, QMainWindow, \
     QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QComboBox
 from PyQt6.QtGui import QAction
@@ -48,6 +49,31 @@ class MainWindow(QMainWindow):
     def insert_student(self):
         dialog = InsertDialog()
         dialog.exec()
+
+    def search_student(self):
+        dialog = SearchDialog()
+        dialog.exec()
+
+
+class SearchDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Search Student")
+        self.setFixedWidth(300)
+        self.setFixedHeight(300)
+
+        layout = QVBoxLayout()
+
+        self.student_name = QLineEdit()
+        self.student_name.setPlaceholderText("Name")
+        layout.addWidget(self.student_name)
+
+        self.search_button = QPushButton("Search")
+        #self.search_button.clicked.connect(self.search_student)
+        layout.addWidget(self.search_button)
+
+        self.setLayout(layout)
+
 
 class InsertDialog(QDialog):
     def __init__(self):
