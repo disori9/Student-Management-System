@@ -67,10 +67,25 @@ class InsertDialog(QDialog):
         layout.addWidget(self.phone_number)
 
         self.submit_button = QPushButton("Submit")
-        self.submit_button.clicked.connect(self.insert_student)
+        self.submit_button.clicked.connect(self.add_student)
         layout.addWidget(self.submit_button)
 
         self.setLayout(layout)
+
+    def add_student(self):
+        connection = sqlite3.connect("database.db")
+        cursor = connection.cursor()
+
+        name = self.student_name
+        course = self.course_choices.itemText(self.course_choices.currentIndex())
+        phone = self.phone_number
+
+        cursor.execute("INSERT INTO students(name, course, mobile) VALUES (?,?,?)",
+                       name, course, phone)
+        connection.commit()
+
+        connection.close()
+
 
 app = QApplication(sys.argv)
 main_window = MainWindow()
