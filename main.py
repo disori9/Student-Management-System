@@ -44,11 +44,11 @@ class MainWindow(QMainWindow):
 
         connection.close()
 
-    def insert_student(self):
+    def insert(self):
         dialog = InsertDialog()
         dialog.exec()
 
-    def search_student(self):
+    def search(self):
         dialog = SearchDialog()
         dialog.exec()
 
