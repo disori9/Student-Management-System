@@ -80,9 +80,14 @@ class SearchDialog(QDialog):
         # result = cursor.execute(f"SELECT name FROM students WHERE name=?", (name,))
         # result_row = list(result)[0]
 
-        items = main_window.table.findItems(name, Qt.MatchFlag.MatchFixedString)
+        items = main_window.table.findItems(name, Qt.MatchFlag.MatchContains)
+        # basically, this is a generator that searches for the items that matches the given condition (name)
+
+        # we iterate over this iterator/generator
         for item in items:
             main_window.table.item(item.row(), 1).setSelected(True)
+            # we select the specific cell, item.row() is the index of row where the item was found and 1 is the name
+            # column. .setSelected(True) highights the cell.
 
         cursor.close()
         connection.close()
