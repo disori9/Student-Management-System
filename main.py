@@ -1,6 +1,4 @@
-from tkinter.constants import INSERT
-
-from PyQt6.QtCore import QLine
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QGridLayout, QMainWindow, \
     QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QComboBox
 from PyQt6.QtGui import QAction
@@ -69,10 +67,26 @@ class SearchDialog(QDialog):
         layout.addWidget(self.student_name)
 
         self.search_button = QPushButton("Search")
-        #self.search_button.clicked.connect(self.search_student)
+        self.search_button.clicked.connect(self.search_student)
         layout.addWidget(self.search_button)
 
         self.setLayout(layout)
+
+    def search_student(self):
+        connection = sqlite3.connect("database.db")
+        cursor = connection.cursor()
+
+        name = self.student_name.text().lower().title()
+        result = cursor.execute(f"SELECT name FROM students WHERE name=?", (name,))
+        result_row = list(result)[0]
+
+        items = main_window.table.findItems(result_row[0], Qt.MatchFlag.MatchFixedString)
+        for item in items:
+            main_window.table.item(item.row(), 1).setSelected(True)
+
+        cursor.close()
+        connection.close()
+
 
 
 class InsertDialog(QDialog):
