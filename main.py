@@ -18,7 +18,10 @@ class MainWindow(QMainWindow):
         about = QAction("About", self)
         help_menu.addAction(about)
 
-        table = QTableWidget()
+        self.table = QTableWidget()
+        self.table.setColumnCount(4)
+        self.table.setHorizontalHeaderLabels(("Id", "Name", "Course", "Mobile"))
+        self.setCentralWidget(self.table)
 
 app = QApplication(sys.argv)
 main_window = MainWindow()
