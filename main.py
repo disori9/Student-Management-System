@@ -16,14 +16,14 @@ class MainWindow(QMainWindow):
         edit_menu = self.menuBar().addMenu("&Edit")
 
         add_student = QAction("Add Student", self)
-        add_student.triggered.connect(self.insert_student)
+        add_student.triggered.connect(self.insert)
         file_menu.addAction(add_student)
 
         about = QAction("About", self)
         help_menu.addAction(about)
 
         search = QAction("Search", self)
-        search.triggered.connect(self.search_student)
+        search.triggered.connect(self.search)
         edit_menu.addAction(search)
 
         self.table = QTableWidget()
@@ -77,10 +77,10 @@ class SearchDialog(QDialog):
         cursor = connection.cursor()
 
         name = self.student_name.text().lower().title()
-        result = cursor.execute(f"SELECT name FROM students WHERE name=?", (name,))
-        result_row = list(result)[0]
+        # result = cursor.execute(f"SELECT name FROM students WHERE name=?", (name,))
+        # result_row = list(result)[0]
 
-        items = main_window.table.findItems(result_row[0], Qt.MatchFlag.MatchFixedString)
+        items = main_window.table.findItems(name, Qt.MatchFlag.MatchFixedString)
         for item in items:
             main_window.table.item(item.row(), 1).setSelected(True)
 
