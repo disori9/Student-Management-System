@@ -104,6 +104,7 @@ class DeleteDialog(QDialog):
         self.setLayout(layout)
 
         self.yes_button.clicked.connect(self.delete_student)
+        self.no_button.clicked.connect(self.close)
 
     def delete_student(self):
         connection = sqlite3.connect("database.db")
