@@ -22,6 +22,7 @@ class MainWindow(QMainWindow):
 
         about = QAction("About", self)
         help_menu.addAction(about)
+        about.triggered.connect(self.about)
 
         search = QAction(QIcon("./icons/search.png"),"Search", self)
         search.triggered.connect(self.search)
@@ -84,6 +85,20 @@ class MainWindow(QMainWindow):
     def delete(self):
         dialog = DeleteDialog()
         dialog.exec()
+
+    def about(self):
+        dialog = AboutDialog()
+        dialog.exec()
+
+
+class AboutDialog(QMessageBox):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("About")
+        content = """
+        This app is created to test my knowledge about CRUD in databases"""
+
+        self.setText(content)
 
 
 class DeleteDialog(QDialog):
