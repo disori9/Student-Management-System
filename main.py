@@ -91,13 +91,29 @@ class EditDialog(QDialog):
         layout = QVBoxLayout()
 
         cell_index = main_window.table.currentRow()
-        cell = main_window.table.item(cell_index, 1).text()
+        name_cell = main_window.table.item(cell_index, 1).text()
 
-        self.student_name = QLineEdit(cell)
+        self.student_name = QLineEdit(name_cell)
         layout.addWidget(self.student_name)
+
+        course_cell = main_window.table.item(cell_index, 2).text()
+        self.course_choices = QComboBox()
+        self.course_choices.addItems(("Math", "Astronomy", "Biology", "Computer Science", "Physics"))
+        self.course_choices.setCurrentText(course_cell)
+        layout.addWidget(self.course_choices)
+
+        number_cell = main_window.table.item(cell_index, 3).text()
+        self.phone_number = QLineEdit(number_cell)
+        layout.addWidget(self.phone_number)
+
+        self.update_button = QPushButton("Submit")
+        self.update_button.clicked.connect(self.update)
+        layout.addWidget(self.update_button)
 
         self.setLayout(layout)
 
+    def update(self):
+        pass
 
 class SearchDialog(QDialog):
     def __init__(self):
