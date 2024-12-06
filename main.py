@@ -47,7 +47,7 @@ class MainWindow(QMainWindow):
         edit_button = QPushButton("Edit Record")
         edit_button.clicked.connect(self.edit)
         delete_button = QPushButton("Delete Record")
-        #delete_button.clicked.connect(self.delete)
+        delete_button.clicked.connect(self.delete)
 
         children = self.findChildren(QPushButton)
         if children:
@@ -80,6 +80,28 @@ class MainWindow(QMainWindow):
     def edit(self):
         dialog = EditDialog()
         dialog.exec()
+
+    def delete(self):
+        dialog = DeleteDialog()
+        dialog.exec()
+
+
+class DeleteDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Delete Student Data")
+
+        layout = QGridLayout()
+
+        self.confirmation_text = QLabel("Are you sure you want to delete?")
+        self.yes_button = QPushButton("Yes")
+        self.no_button = QPushButton("No")
+
+        layout.addWidget(self.confirmation_text, 0, 0, 1, 2)
+        layout.addWidget(self.yes_button, 1, 0)
+        layout.addWidget(self.no_button, 1, 1)
+        self.setLayout(layout)
+
 
 class EditDialog(QDialog):
     def __init__(self):
@@ -128,6 +150,7 @@ class EditDialog(QDialog):
 
         main_window.load_data()
 
+
 class SearchDialog(QDialog):
     def __init__(self):
         super().__init__()
@@ -166,7 +189,6 @@ class SearchDialog(QDialog):
 
         cursor.close()
         connection.close()
-
 
 
 class InsertDialog(QDialog):
