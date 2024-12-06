@@ -1,6 +1,6 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QWidget, QGridLayout, QMainWindow, \
-    QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QComboBox, QToolBar, QStatusBar
+    QTableWidget, QTableWidgetItem, QDialog, QVBoxLayout, QComboBox, QToolBar, QStatusBar, QDial
 from PyQt6.QtGui import QAction, QIcon
 import sys
 import sqlite3
@@ -45,7 +45,7 @@ class MainWindow(QMainWindow):
 
     def cell_clicked(self):
         edit_button = QPushButton("Edit Record")
-        #edit_button.clicked.connect(self.edit)
+        edit_button.clicked.connect(self.edit)
         delete_button = QPushButton("Delete Record")
         #delete_button.clicked.connect(self.delete)
 
@@ -76,6 +76,27 @@ class MainWindow(QMainWindow):
     def search(self):
         dialog = SearchDialog()
         dialog.exec()
+
+    def edit(self):
+        dialog = EditDialog()
+        dialog.exec()
+
+class EditDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Update Student Data")
+        self.setFixedWidth(300)
+        self.setFixedHeight(300)
+
+        layout = QVBoxLayout()
+
+        cell_index = main_window.table.currentRow()
+        cell = main_window.table.item(cell_index, 1).text()
+
+        self.student_name = QLineEdit(cell)
+        layout.addWidget(self.student_name)
+
+        self.setLayout(layout)
 
 
 class SearchDialog(QDialog):
