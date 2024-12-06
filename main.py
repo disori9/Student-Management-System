@@ -90,30 +90,43 @@ class EditDialog(QDialog):
 
         layout = QVBoxLayout()
 
-        cell_index = main_window.table.currentRow()
-        name_cell = main_window.table.item(cell_index, 1).text()
+        self.cell_index = main_window.table.currentRow()
+        self.name_cell = main_window.table.item(self.cell_index, 1).text()
 
-        self.student_name = QLineEdit(name_cell)
+        self.student_name = QLineEdit(self.name_cell)
         layout.addWidget(self.student_name)
 
-        course_cell = main_window.table.item(cell_index, 2).text()
         self.course_choices = QComboBox()
         self.course_choices.addItems(("Math", "Astronomy", "Biology", "Computer Science", "Physics"))
-        self.course_choices.setCurrentText(course_cell)
+        self.course_cell = main_window.table.item(self.cell_index, 2).text()
+        self.course_choices.setCurrentText(self.course_cell)
         layout.addWidget(self.course_choices)
 
-        number_cell = main_window.table.item(cell_index, 3).text()
-        self.phone_number = QLineEdit(number_cell)
+        self.number_cell = main_window.table.item(self.cell_index, 3).text()
+        self.phone_number = QLineEdit(self.number_cell)
         layout.addWidget(self.phone_number)
 
-        self.update_button = QPushButton("Submit")
+        self.update_button = QPushButton("Update")
         self.update_button.clicked.connect(self.update)
         layout.addWidget(self.update_button)
 
         self.setLayout(layout)
 
     def update(self):
-        pass
+        connection = sqlite3.connect("database.db")
+        cursor = connection.cursor()
+        name = self.student_name.text()
+        course = self.course_choices.currentText()
+        number = int(self.phone_number.text())
+        id = int(main_window.table.item(self.cell_index, 0).text())
+
+        cursor.execute("UPDATE students SET name = ?, course = ?, mobile = ? WHERE id = ?", (name, course, number, id))
+        connection.commit()
+
+        cursor.close()
+        connection.close()
+
+        main_window.load_data()
 
 class SearchDialog(QDialog):
     def __init__(self):
